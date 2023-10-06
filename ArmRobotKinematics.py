@@ -50,9 +50,13 @@ class ArmRobotKinematics:
                 self.__d[i] = link.d
                 self.__alpha[i] = link.alpha
 
-        self.dhTable = np.column_stack(
-            (self.__theta, self.__d, self.__a, self.__alpha)
-        )  # Create the DH table using NumPy
+        theta = np.array(self.__theta)
+        d = np.array(self.__d)
+        a = np.array(self.__a)
+        alpha = np.array(self.__alpha)
+        
+        # Create the DH table using NumPy
+        self.dhTable = np.column_stack((theta, d, a, alpha))
         
         # Compute the forward kinematics based on the updated DH Table and return the transformation matrix
         return self.forward_kinematics()
