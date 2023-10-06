@@ -3,7 +3,7 @@ PRISMATIC = 0
 REVOLUTE = 1
 
 class Link:
-    def __init__(self, joint_type, length, alpha):
+    def __init__(self, joint_type, length, alpha=0):
         self.joint_type = joint_type
         self.theta = 0
         self.a = 0
