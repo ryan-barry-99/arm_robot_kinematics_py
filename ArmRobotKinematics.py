@@ -32,7 +32,7 @@ class ArmRobotKinematics:
     #       - PRISMATIC
     #   length (meters)
     def addLink(self, joint_type, length):
-        if joint_type is not PRISMATIC or joint_type is not REVOLUTE:
+        if joint_type is not PRISMATIC and joint_type is not REVOLUTE:
             print(f"Invalid Joint Type for joint {self.num_joints}")
             return
         self.num_joints += 1  # Increment the number of joints
