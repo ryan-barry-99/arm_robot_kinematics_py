@@ -12,25 +12,14 @@ This repository contains the code for the  `ArmRobot`  module, which represents 
 
 To use the  `ArmRobot`  module, follow these steps:
 
-1. Update the  `__init__`  method in the  `ArmRobot`  class to define the specific configuration of your arm robot:
-'''class ArmRobot(ArmRobotKinematics):
-       def __init__(self):
-           super().__init__(self)
-           '''
-           Additional initialization code specific to the arm robot:
-           This is where you will define the configuration of your robot with the addLink method
-           '''
-           # Add links and joints specific to your arm robot
-           self.link0 = self.addLink(joint_type=REVOLUTE, length=1)
-           self.link1 = self.addLink(joint_type=PRISMATIC, length=1)
-           # Add more links and joints as needed'''
+1. Update the  `__init__`  method in the  `ArmRobot`  class to define the specific configuration of your arm robot
 2. Import the module:
 from ArmRobot import ArmRobot
 3. Create an instance of the  `ArmRobot`  class:
 arm = ArmRobot()
 4. Move individual joints using the  `moveJoint`  method (inherited from  `ArmRobotKinematics`  class):
 arm.moveJoint(joint, angle_or_distance)
--  `joint` : The number of the joint to move.
+   -  `joint` : The number of the joint to move.
    -  `angle_or_distance` : The angle (for revolute joints) or distance (for prismatic joints) to move the joint.
 
 5. Update the DH table using the  `updateDHTable`  method (inherited from  `ArmRobotKinematics`  class):
