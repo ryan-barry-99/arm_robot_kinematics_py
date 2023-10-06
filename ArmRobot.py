@@ -18,11 +18,13 @@ class ArmRobot(ArmRobotKinematics):
         '''
         Additional initialization code specific to the arm robot:
         This is where you will define the configuration of your robot with the addLink method
+
+        Example Usage:
+            # Add a link called link0 with a revolute joint and length 1 m
+            self.link0 = self.addLink(joint_type=REVOLUTE, length=1)
+            # Add a prismatic joint with an initial extended length of 1 m
+            self.link1 = self.addLink(joint_type=PRISMATIC, length=1)
         '''
-        # Add a link called link0 with a revolute joint and length 1 m
-        self.link0 = self.addLink(joint_type=REVOLUTE, length=1)
-        # Add a prismatic joint with an initial extended length of 1 m
-        self.link1 = self.addLink(joint_type=PRISMATIC, length=1)
         pass
          
     def inverse_kinematics(self, target_position, target_orientation):
