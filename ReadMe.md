@@ -6,20 +6,28 @@ This repository contains the code for the  `ArmRobot`  module, which represents 
 
 -  `ArmRobot.py` : The main module file that contains the  `ArmRobot`  class.
 -  `ArmRobotKinematics.py` : The module that defines the  `ArmRobotKinematics`  class.
--  `requirements.txt`: Library dependencies
 -  `README.md` : This readme file to provide information about the repository.
 
 ## Usage
 
 To use the  `ArmRobot`  module, follow these steps:
 
-1. Import the module:
+1. Update the  `__init__`  method in the  `ArmRobot`  class to define the specific configuration of your arm robot:
+class ArmRobot(ArmRobotKinematics):
+       def __init__(self):
+           super().__init__(self)
+           '''
+           Additional initialization code specific to the arm robot:
+           This is where you will define the configuration of your robot with the addLink method
+           '''
+           # Add links and joints specific to your arm robot
+           self.link0 = self.addLink(joint_type=REVOLUTE, length=1)
+           self.link1 = self.addLink(joint_type=PRISMATIC, length=1)
+           # Add more links and joints as needed
+2. Import the module:
 from ArmRobot import ArmRobot
-2. Create an instance of the  `ArmRobot`  class:
+3. Create an instance of the  `ArmRobot`  class:
 arm = ArmRobot()
-3. Add links to the arm using the  `addLink`  method:
-arm.link0 = arm.addLink(joint_type=REVOLUTE, length=1)
-   arm.link1 = arm.addLink(joint_type=PRISMATIC, length=1)
 4. Move individual joints using the  `moveJoint`  method (inherited from  `ArmRobotKinematics`  class):
 arm.moveJoint(joint, angle_or_distance)
 -  `joint` : The number of the joint to move.
@@ -31,7 +39,7 @@ arm.updateDHTable()
 transformation_matrix = arm.forward_kinematics()
 - Returns the 4x4 transformation matrix representing the end-effector position and orientation.
 
-7. Perform inverse kinematics (must be implemented specific to robot configuration) using the  `inverse_kinematics`  method (override from  `ArmRobotKinematics`  class).
+7. Perform inverse kinematics (yet to be implemented) using the  `inverse_kinematics`  method (override from  `ArmRobotKinematics`  class).
 
 ## Author
 
