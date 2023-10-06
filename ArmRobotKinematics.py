@@ -38,7 +38,7 @@ class ArmRobotKinematics:
         self.num_joints += 1  # Increment the number of joints
         self.__joint_type.append(joint_type)  # Append the joint type to the private list
         self.__joint_length.append(length)  # Append the joint length to the private list
-        self.updateDHTable()  # Update the DH table
+        self.updateDHTable()  # Add the link to the DH table
         return self.num_joints
 
     def moveJoint(self, joint, angle_or_distance):
@@ -55,27 +55,34 @@ class ArmRobotKinematics:
             self.updateDHTable()  # Update the DH table
         else:
             print("Invalid Joint Number")  # Print an error message for invalid joint number
+        
+        # Update the DH Table and return the transformation matrix
+        return self.updateDHTable()
 
     def updateDHTable(self):
-        self.__theta = [0] * self.num_joints  # Initialize theta as a list of zeros
-        self.__d = [0] * self.num_joints  # Initialize d as a list of zeros
-        self.__a = [0] * self.num_joints  # Initialize a as a list of zeros
-        self.__alpha = [0] * self.num_joints  # Initialize alpha as a list of zeros
+        if self.dhTable is None:
+            self.__theta = [0] * self.num_joints  # Initialize theta as a list of zeros
+            self.__d = [0] * self.num_joints  # Initialize d as a list of zeros
+            self.__a = [0] * self.num_joints  # Initialize a as a list of zeros
+            self.__alpha = [0] * self.num_joints  # Initialize alpha as a list of zeros
 
-        for i in range(self.num_joints):
-            if self.__joint_type[i] == REVOLUTE:  # Check if the joint type is revolute
-                self.__a[i] = self.__joint_length[i]  # Set the a parameter
-            elif self.__joint_type[i] == PRISMATIC:  # Check if the joint type is prismatic
-                self.__d[i] = self.__joint_length[i]  # Set the d parameter
-            else:
-                print(
-                    f"Invalid joint type at joint {i}"
-                )  # Print an error message for invalid joint type
-                return None
+            for i in range(self.num_joints):
+                if self.__joint_type[i] == REVOLUTE:  # Check if the joint type is revolute
+                    self.__a[i] = self.__joint_length[i]  # Set the a parameter
+                elif self.__joint_type[i] == PRISMATIC:  # Check if the joint type is prismatic
+                    self.__d[i] = self.__joint_length[i]  # Set the d parameter
+                else:
+                    print(
+                        f"Invalid joint type at joint {i}"
+                    )  # Print an error message for invalid joint type
+                    return None
 
         self.dhTable = np.column_stack(
             (self.__theta, self.__d, self.__a, self.__alpha)
         )  # Create the DH table using NumPy
+        
+        # Compute the forward kinematics based on the updated DH Table and return the transformation matrix
+        return self.forward_kinematics()
 
     def forward_kinematics(self):
         self.__A = []  # Initialize A matrices as empty list
