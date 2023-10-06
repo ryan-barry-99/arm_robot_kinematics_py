@@ -15,7 +15,7 @@ To use the  `ArmRobot`  module, follow these steps:
 
 1. Update the  `__init__`  method in the  `ArmRobot`  class to define the specific configuration of your arm robot
 2. Import the module:
-from ArmRobot import ArmRobot
+`from ArmRobot import ArmRobot`
 3. Create an instance of the  `ArmRobot`  class:
 arm = ArmRobot()
 4. Update individual joint positions to reflect the state of your robot using the  `moveJoint`  method (inherited from  `ArmRobotKinematics`  class):
