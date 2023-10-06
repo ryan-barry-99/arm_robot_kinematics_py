@@ -1,4 +1,12 @@
+"""
+File: Link.py
 
+Description: This module defines the Link class which represents a single link in an arm robot.  
+It contains the joint type, length, angle and methods to move the joint.
+
+Author: Ryan Barry 
+Date Created: October 6, 2023
+"""
 PRISMATIC = 0
 REVOLUTE = 1
 
