@@ -6,6 +6,7 @@ This repository contains the code for the  `ArmRobot`  module, which represents 
 
 -  `ArmRobot.py` : The main module file that contains the  `ArmRobot`  class.
 -  `ArmRobotKinematics.py` : The module that defines the  `ArmRobotKinematics`  class.
+-  `requirements.txt`: Library dependencies
 -  `README.md` : This readme file to provide information about the repository.
 
 ## Usage
