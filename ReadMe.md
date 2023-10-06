@@ -26,7 +26,7 @@ To use the  `ArmRobot`  module, follow these steps:
 `transformation_matrix = arm.forward_kinematics()`
    - Returns the 4x4 transformation matrix representing the end-effector position and orientation.
 
-6. Perform inverse kinematics (yet to be implemented) using the  `inverse_kinematics`  method (override from  `ArmRobotKinematics`  class).
+6. Perform inverse kinematics (yet to be implemented) using the  `inverse_kinematics`  method (override from  `ArmRobotKinematics`  class based on your robot's specific configuration).
 
 ## Author
 
