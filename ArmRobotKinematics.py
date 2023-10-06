@@ -39,6 +39,7 @@ class ArmRobotKinematics:
         self.__joint_type.append(joint_type)  # Append the joint type to the private list
         self.__joint_length.append(length)  # Append the joint length to the private list
         self.updateDHTable()  # Update the DH table
+        return self.num_joints
 
     def moveJoint(self, joint, angle_or_distance):
         if joint < self.num_joints:  # Check if the joint number is valid
