@@ -85,13 +85,13 @@ class ArmRobotKinematics:
             d = self.__d[i]  # Get the d parameter
             a = self.__a[i]  # Get the a parameter
             alpha = self.__alpha[i]  # Get the alpha parameter
+            
+            ct = np.cos(theta)  # Compute the cosine of theta
+            st = np.sin(theta)  # Compute the sine of theta
+            ca = np.cos(alpha)  # Compute the cosine of alpha
+            sa = np.sin(alpha)  # Compute the sine of alpha
 
             if self.__joint_type[i] == REVOLUTE:  # Check if the joint type is revolute
-                ct = np.cos(theta)  # Compute the cosine of theta
-                st = np.sin(theta)  # Compute the sine of theta
-                ca = np.cos(alpha)  # Compute the cosine of alpha
-                sa = np.sin(alpha)  # Compute the sine of alpha
-
                 self.__A.append(
                     np.array(
                         [
@@ -104,11 +104,6 @@ class ArmRobotKinematics:
                 )
 
             elif self.__joint_type[i] == PRISMATIC:  # Check if the joint type is prismatic
-                ct = np.cos(theta)  # Compute the cosine of theta
-                st = np.sin(theta)  # Compute the sine of theta
-                ca = np.cos(alpha)  # Compute the cosine of alpha
-                sa = np.sin(alpha)  # Compute the sine of alpha
-
                 self.__A.append(
                     np.array(
                         [
