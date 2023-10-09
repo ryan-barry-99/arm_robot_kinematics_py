@@ -14,7 +14,7 @@ from ArmRobotKinematics import PRISMATIC, REVOLUTE, ArmRobotKinematics
 
 class ArmRobot(ArmRobotKinematics):
     def __init__(self):
-        super().__init__(self)
+        super().__init__()
         '''
         Additional initialization code specific to the arm robot:
         This is where you will define the configuration of your robot with the addLink method
