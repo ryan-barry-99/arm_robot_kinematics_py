@@ -19,7 +19,7 @@ class ArmRobotKinematics:
     def __init__(self):
         # self.num_joints = 0  # Initialize the number of joints to 0
         self.links = []
-        self.dhTable = DHTable()  # Initialize DH table
+        self.dhTable = DHTable(self.links)  # Initialize DH table
 
     # Add a link to the arm
     # Parameters:
@@ -32,7 +32,7 @@ class ArmRobotKinematics:
     def addLink(self, joint_type, length, alpha):
         new_link = Link(joint_type=joint_type, length=length, alpha=alpha)
         self.links.append(new_link)
-        self.dhTable.setLinks()
+        self.dhTable.setLinks(self.links)
         return new_link
 
     def updateDHTable(self):

@@ -5,17 +5,13 @@ Description: This module defines the DH table class used to compute
 forward kinematics for an arm robot.
 
 Author: Ryan Barry
-Date Created: October 5, 2023
+Date Created: October 9, 2023
 """
 import numpy as np
 
 class DHTable:
     def __init__(self, links):
-        self.links = links
-        self.__theta = np.array()
-        self.__d = np.array()
-        self.__a = np.array()
-        self.__alpha = np.array()
+        self.setLinks(links)
         
     def setLinks(self, links):
         self.links = links
