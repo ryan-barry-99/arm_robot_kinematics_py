@@ -11,26 +11,28 @@ PRISMATIC = 0
 REVOLUTE = 1
 
 class Link:
-    def __init__(self, joint_type, length, alpha=0):
+    def __init__(self, joint_type, length, theta_fix=0, d=0, a=0, alpha_fix=0):
         self.joint_type = joint_type
-        self.theta = 0
-        self.a = 0
-        self.d = 0
-        # rotate around the x1 axis an angle alpha to make z1 parallel to z2
-        self.alpha = alpha
-        if self.joint_type == PRISMATIC:
-            self.d = length
-        elif self.joint_type == REVOLUTE:
-            self.a = length
-        else:
-            print(f"Invalid joint type at joint {i}")
+        # Rotate about the z_n axis an angle theta_n+1 to make x_n parallel to x_n+1
+        self.theta_fix = theta_fix
+        self.theta = self.theta_fix
+        # Translate along the z_n axis a distance d_n+1 to make x_n and x_n+1 collinear
+        self.d = d
+        # Translate along the (already rotated) x_n axis at a distance of a_n+1 to 
+        # bring the origins of x_n and x_n+1 together
+        self.a = a
+        # otate the z_n axis about the x_n+1 axis an angle of alpha_n+1 to align the 
+        # z_n axis with the z_n+1 axis
+        self.alpha_fix = alpha_fix
+        self.alpha = alpha_fix
+        
             
         
     def moveJoint(self, joint_value):
         if self.joint_type == REVOLUTE:
-            self.theta = joint_value
+            self.theta = self.theta_fix + joint_value
         elif self.joint_type == PRISMATIC:
-            self.d = joint_value
+            self.d = length + joint_value
         else:
             print(f"Invalid joint type at joint {joint}")
             return None
@@ -43,23 +45,12 @@ class Link:
         sa = np.sin(self.alpha)  # Compute the sine of alpha
         a = self.a
         d = self.d
-
-        if self.joint_type == REVOLUTE:  # Check if the joint type is revolute
-            return np.array(
+        
+        return np.array(
                             [
                                 [ct, -st * ca, st * sa, a * ct],  # Create the transformation matrix A
                                 [st, ct * ca, -ct * sa, a * st],
                                 [0, sa, ca, d],
-                                [0, 0, 0, 1]
-                            ]
-                        )
-
-        elif self.joint_type == PRISMATIC:  # Check if the joint type is prismatic
-            return np.array(
-                            [
-                                [ct, -st * ca, st * sa, ct * d],  # Create the transformation matrix A
-                                [st, ct * ca, -ct * sa, st * d],
-                                [0, sa, ca, a],
                                 [0, 0, 0, 1]
                             ]
                         )
