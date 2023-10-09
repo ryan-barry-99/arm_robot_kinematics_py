@@ -13,7 +13,7 @@ PRISMATIC = 0
 REVOLUTE = 1
 
 class Link:
-    def __init__(self, joint_type, length, theta_fix=0, d=0, a=0, alpha_fix=0):
+    def __init__(self, joint_type, length, theta_fix=0, a=0, alpha_fix=0):
         self.joint_type = joint_type
         # Rotate about the z_n axis an angle theta_n+1 to make x_n parallel to x_n+1
         self.theta_fix = theta_fix
