@@ -17,7 +17,16 @@ from Link import PRISMATIC, REVOLUTE, Link
 class ArmRobotKinematics:
     def __init__(self):
         self.links = []
+        # Arm offset from robot's home frame
+        self.__offset = np.array([0],[0],[0],[1])
 
+    def set_offset(self, offset: list):
+        '''
+        Function to set an offset from the robot's jome frame
+        '''
+        for i, point in enumerate(offset):
+            self.__offset[i] = point
+            
     # Add a link to the arm
     # Parameters:
     #   joint_type:
@@ -33,6 +42,7 @@ class ArmRobotKinematics:
 
     def forward_kinematics(self):
         self.__T = np.identity(4)  # Initialize the transformation matrix as an identity matrix
+        self.__T[3] = self.__offset
 
         for link in self.links:
             self.__T = np.dot(self.__T, link.transform_matrix())  # Multiply the transformation matrix T by A
