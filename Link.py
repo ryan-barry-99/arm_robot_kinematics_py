@@ -24,6 +24,7 @@ class Link:
             self.a = length
         else:
             print(f"Invalid joint type at joint {i}")
+            
         
     def moveJoint(self, joint_value):
         if self.joint_type == REVOLUTE:
@@ -33,3 +34,32 @@ class Link:
         else:
             print(f"Invalid joint type at joint {joint}")
             return None
+        
+        
+    def transform_matrix(self):
+        ct = np.cos(self.theta)  # Compute the cosine of theta
+        st = np.sin(self.theta)  # Compute the sine of theta
+        ca = np.cos(self.alpha)  # Compute the cosine of alpha
+        sa = np.sin(self.alpha)  # Compute the sine of alpha
+        a = self.a
+        d = self.d
+
+        if self.joint_type == REVOLUTE:  # Check if the joint type is revolute
+            return np.array(
+                            [
+                                [ct, -st * ca, st * sa, a * ct],  # Create the transformation matrix A
+                                [st, ct * ca, -ct * sa, a * st],
+                                [0, sa, ca, d],
+                                [0, 0, 0, 1]
+                            ]
+                        )
+
+        elif self.joint_type == PRISMATIC:  # Check if the joint type is prismatic
+            return np.array(
+                            [
+                                [ct, -st * ca, st * sa, ct * d],  # Create the transformation matrix A
+                                [st, ct * ca, -ct * sa, st * d],
+                                [0, sa, ca, a],
+                                [0, 0, 0, 1]
+                            ]
+                        )
