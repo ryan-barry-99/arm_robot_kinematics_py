@@ -7,6 +7,8 @@ It contains the joint type, length, angle and methods to move the joint.
 Author: Ryan Barry 
 Date Created: October 6, 2023
 """
+import numpy as np
+
 PRISMATIC = 0
 REVOLUTE = 1
 
@@ -17,7 +19,7 @@ class Link:
         self.theta_fix = theta_fix
         self.theta = self.theta_fix
         # Translate along the z_n axis a distance d_n+1 to make x_n and x_n+1 collinear
-        self.d = d
+        self.d = length
         # Translate along the (already rotated) x_n axis at a distance of a_n+1 to 
         # bring the origins of x_n and x_n+1 together
         self.a = a
