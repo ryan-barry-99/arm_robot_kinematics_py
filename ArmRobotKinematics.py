@@ -35,8 +35,8 @@ class ArmRobotKinematics:
     #   length (meters)
     #   alpha (radians)
     #       - rotate around the x1 axis an angle alpha to make z1 parallel to z2
-    def addLink(self, joint_type, length, theta_fix=0, a=0, alpha_fix=0):
-        new_link = Link(joint_type=joint_type, length=length, theta_fix=theta_fix, a=a, alpha_fix=alpha_fix)
+    def addLink(self, joint_type, theta_fix=0, d=0, a=0, alpha_fix=0):
+        new_link = Link(joint_type=joint_type, d=d, theta_fix=theta_fix, a=a, alpha_fix=alpha_fix)
         self.links.append(new_link)
         return new_link
 
