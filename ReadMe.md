@@ -22,7 +22,7 @@ To use the  `ArmRobot`  module, follow these steps:
 4. Update individual joint positions to reflect the state of your robot using the  `moveJoint`  method (inherited from  `ArmRobotKinematics`  class):
  `arm.moveJoint(joint, angle_or_distance)` 
    -  `joint`  : The number of the joint to move.
-   -  `angle_or_distance`  : The angle (for revolute joints) or distance (for prismatic joints) to move the joint.
+   -  `joint_value`  : The angle (for revolute joints) or distance (for prismatic joints) to move the joint.
 5. Perform forward kinematics to compute the end-effector position and orientation using the  `forward_kinematics`  method (inherited from  `ArmRobotKinematics`  class):
  `transformation_matrix = arm.forward_kinematics()` 
    - Returns the 4x4 transformation matrix representing the end-effector position and orientation.
