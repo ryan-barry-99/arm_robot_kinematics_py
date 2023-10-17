@@ -34,7 +34,10 @@ class Link:
         if self.joint_type == REVOLUTE:
             self.theta = self.theta_fix + joint_value
         elif self.joint_type == PRISMATIC:
-            self.d = self.d + joint_value
+            if self.d == 0:
+                self.a = self.a + joint_value
+            elif self.a == 0:
+                self.d = self.d + joint_value
         else:
             print(f"Invalid joint type at joint {joint}")
             return None
