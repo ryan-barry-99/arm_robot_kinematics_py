@@ -20,10 +20,10 @@ class ArmRobot(ArmRobotKinematics):
         This is where you will define the configuration of your robot with the addLink method
 
         Example Usage:
-            # Add a link called link0 with a revolute joint and length 1 (m) and a parallel z axis
-            self.link0 = self.addLink(joint_type=REVOLUTE, length=1, alpha=0)
-            # Add a prismatic joint with an initial extended length of 1 (m) and a z axis rotated 90 degrees
-            self.link1 = self.addLink(joint_type=PRISMATIC, length=1, alpha=math.rad(90))
+            # Add a link with length 0.5 (m) along the z-axis
+            self.link0 = self.addLink(joint_type=REVOLUTE, theta_fix=0, d=0.5, a=0, alpha_fix=0)
+            # Add a prismatic joint with acollapsed length of 1 (m) and a z axis rotated 90 degrees
+            self.link1 = self.addLink(joint_type=PRISMATIC, theta_fix=0, d=1, a=0, alpha_fix=math.rad(90))
         '''
         pass
          
