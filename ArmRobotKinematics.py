@@ -73,7 +73,7 @@ class ArmRobotKinematics:
         pass
         
 
-    def iterative_inverse_kinematics(self, target_position, target_orientation, tolerance=0.01):
+    def iterative_inverse_kinematics(self, target_position, target_orientation, tolerance=0.01, max_iterations=1000):
         """
         Computes the inverse kinematics using an iterative method.
         target_position: The desired end-effector position [x, y, z]
@@ -87,7 +87,7 @@ class ArmRobotKinematics:
 
         # Initialize variables
         error = np.inf
-
+        iterations=0
         # While error is greater than tolerance, iterate
         while np.linalg.norm(error) > tolerance:
             # Calculate current end-effector position and orientation
@@ -117,6 +117,10 @@ class ArmRobotKinematics:
 
             # Recalculate position and orientation error
             error = target_position - current_position
+            
+            iterations += 1
+            if iterations > max_iterations:
+                raise ValueError("Inverse kinematics did not converge.")
 
             
         for i, frame in enumerate(self._frames):
