@@ -44,7 +44,10 @@ class Frame:
         if self.joint_type == REVOLUTE:
             self.theta = joint_value % (2*np.pi) 
         elif self.joint_type == PRISMATIC:
-            self.d = self.d + joint_value
+            if self.d == 0:
+                self.a = self.a + joint_value
+            elif self.a == 0:
+                self.d = self.d + joint_value
         else:
             if self.joint_type not in [FIXED_PRISMATIC, FIXED_REVOLUTE]:
                 print(f"Invalid joint type")

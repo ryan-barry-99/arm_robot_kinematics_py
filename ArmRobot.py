@@ -10,9 +10,8 @@ Author: Ryan Barry
 Date Created: October 5, 2023
 """
 
-import numpy as np
-from ArmRobotKinematics import PRISMATIC, REVOLUTE, ArmRobotKinematics
-from math import pi
+
+from ArmRobotKinematics import PRISMATIC, REVOLUTE, FIXED_PRISMATIC, FIXED_REVOLUTE, ArmRobotKinematics
 
 
 class ArmRobot(ArmRobotKinematics):
