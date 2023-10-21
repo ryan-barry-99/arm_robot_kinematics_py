@@ -73,7 +73,7 @@ class ArmRobotKinematics:
         pass
         
 
-    def iterative_inverse_kinematics(self, target_position, target_orientation, tolerance=0.01, max_iterations=1000):
+    def iterative_inverse_kinematics(self, target_position, target_orientation, tolerance=0.005, max_iterations=100000, momentum=0.1):
         """
         Computes the inverse kinematics using an iterative method.
         target_position: The desired end-effector position [x, y, z]
@@ -86,16 +86,18 @@ class ArmRobotKinematics:
         target_orientation = np.array(target_orientation)
 
         # Initialize variables
-        error = np.inf
+        position_error = np.inf
+        orientation_error = np.inf
         iterations=0
         # While error is greater than tolerance, iterate
-        while np.linalg.norm(error) > tolerance:
+        prev_dq = np.zeros(len(self._frames))
+        while np.linalg.norm(position_error) > tolerance or np.linalg.norm(orientation_error) > tolerance:
             # Calculate current end-effector position and orientation
             x, y, z, roll, pitch, yaw= self.forward_kinematics()
             current_position = [x, y, z]
             current_orientation = [roll, pitch, yaw]
             # Calculate position and orientation error
-            error = target_position - current_position
+            position_error = target_position - current_position
 
             # Calculate orientation error
             orientation_error = target_orientation - current_orientation
@@ -104,24 +106,25 @@ class ArmRobotKinematics:
             J = self.jacobian()
 
             # Solve for joint increments
-            dq = np.linalg.pinv(J) @ np.concatenate((error, orientation_error))
+            dq = np.linalg.pinv(J) @ np.concatenate((position_error, orientation_error)) + momentum * prev_dq
+            prev_dq = dq
 
             # Update joint angles
             for i in range(len(self._frames)):
                 self._frames[i].moveJoint(self._frames[i].theta + dq[i])
 
             # Recalculate current end-effector position and orientation
-            x, y, z, roll, pitch, yaw= self.forward_kinematics()
+            x, y, z, roll, pitch, yaw = self.forward_kinematics()
             current_position = [x, y, z]
             current_orientation = [roll, pitch, yaw]
 
             # Recalculate position and orientation error
-            error = target_position - current_position
+            position_error = target_position - current_position
+            orientation_error = target_orientation - current_orientation
             
             iterations += 1
-            if iterations > max_iterations:
+            if iterations == max_iterations:
                 raise ValueError("Inverse kinematics did not converge.")
-
             
         for i, frame in enumerate(self._frames):
             if frame.joint_type == REVOLUTE:
