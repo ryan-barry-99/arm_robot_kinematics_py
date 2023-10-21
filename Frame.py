@@ -1,7 +1,7 @@
 """
-File: Link.py
+File: Frame.py
 
-Description: This module defines the Link class which represents a single link in an arm robot.  
+Description: This module defines the frame class which represents a single frame in an arm robot.  
 It contains the joint type, length, angle and methods to move the joint.
 
 Author: Ryan Barry 
@@ -11,9 +11,18 @@ import numpy as np
 
 PRISMATIC = 0
 REVOLUTE = 1
+FIXED_PRISMATIC = 2
+FIXED_REVOLUTE = 3
 
-class Link:
+class Frame:
     def __init__(self, joint_type,theta_fix=0, d=0, a=0, alpha_fix=0):
+        """
+        This module defines the frame class which represents a single frame in an arm robot.  
+        It contains the joint type, length, angle and methods to move the joint.
+        """
+        if joint_type not in [PRISMATIC, REVOLUTE, FIXED_PRISMATIC, FIXED_REVOLUTE]:
+            raise ValueError(f'Joint type {joint_type} is not supported.')
+        
         self.joint_type = joint_type
         # Rotate about the z_n axis an angle theta_n+1 to make x_n parallel to x_n+1
         self.theta_fix = theta_fix
@@ -23,26 +32,31 @@ class Link:
         # Translate along the (already rotated) x_n axis at a distance of a_n+1 to 
         # bring the origins of x_n and x_n+1 together
         self.a = a
-        # otate the z_n axis about the x_n+1 axis an angle of alpha_n+1 to align the 
+        # rotate the z_n axis about the x_n+1 axis an angle of alpha_n+1 to align the 
         # z_n axis with the z_n+1 axis
-        self.alpha_fix = alpha_fix
         self.alpha = alpha_fix
         
-            
-        
-    def moveJoint(self, joint_value):
+          
+    def moveJoint(self, joint_value: float):
+        """
+        Changes the joint value DH parameter by the specified amount.
+        """
         if self.joint_type == REVOLUTE:
-            self.theta = self.theta_fix + joint_value
+            self.theta = joint_value % (2*np.pi) 
         elif self.joint_type == PRISMATIC:
             self.d = self.d + joint_value
         else:
-            print(f"Invalid joint type at joint {joint}")
+            if self.joint_type not in [FIXED_PRISMATIC, FIXED_REVOLUTE]:
+                print(f"Invalid joint type")
             return None
         
         
     def transform_matrix(self):
-        ct = np.cos(self.theta)  # Compute the cosine of theta
-        st = np.sin(self.theta)  # Compute the sine of theta
+        """
+        Computes and returns the transformation matrix for the frame.
+        """
+        ct = np.cos(self.theta_fix + self.theta)  # Compute the cosine of theta
+        st = np.sin(self.theta_fix + self.theta)  # Compute the sine of theta
         ca = np.cos(self.alpha)  # Compute the cosine of alpha
         sa = np.sin(self.alpha)  # Compute the sine of alpha
         a = self.a
