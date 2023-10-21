@@ -12,7 +12,7 @@ Date Created: October 5, 2023
 
 
 from ArmRobotKinematics import PRISMATIC, REVOLUTE, FIXED_PRISMATIC, FIXED_REVOLUTE, ArmRobotKinematics
-
+from math import pi
 
 class ArmRobot(ArmRobotKinematics):
     def __init__(self):
