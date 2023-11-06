@@ -11,7 +11,7 @@ Date created: June, 26 2023
 """
 
 import numpy as np  # Importing the NumPy library for mathematical operations
-from Frame import PRISMATIC, REVOLUTE, FIXED_REVOLUTE, FIXED_PRISMATIC, Frame
+from Frame import PRISMATIC, REVOLUTE, FIXED_ROTATION, FIXED_TRANSLATION, Frame
 from math import atan2, sqrt, pi
 
 class ArmRobotKinematics:
@@ -146,7 +146,7 @@ class ArmRobotKinematics:
 
         On = self.forward_kinematics()[:3]  # End-effector position
         for i, frame in enumerate(self._frames):
-            if frame.joint_type in [FIXED_REVOLUTE, FIXED_PRISMATIC]:
+            if frame.joint_type in [FIXED_ROTATION, FIXED_TRANSLATION]:
                 continue
             # Get rotation axis
             Zi = frame.transform_matrix()[:3, 2]  # The third column of the rotation matrix

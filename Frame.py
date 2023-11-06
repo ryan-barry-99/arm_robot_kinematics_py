@@ -11,8 +11,8 @@ import numpy as np
 
 PRISMATIC = 0
 REVOLUTE = 1
-FIXED_PRISMATIC = 2
-FIXED_REVOLUTE = 3
+FIXED_TRANSLATION = 2
+FIXED_ROTATION = 3
 
 class Frame:
     def __init__(self, joint_type,theta_fix=0, d=0, a=0, alpha_fix=0):
@@ -20,7 +20,7 @@ class Frame:
         This module defines the frame class which represents a single frame in an arm robot.  
         It contains the joint type, length, angle and methods to move the joint.
         """
-        if joint_type not in [PRISMATIC, REVOLUTE, FIXED_PRISMATIC, FIXED_REVOLUTE]:
+        if joint_type not in [PRISMATIC, REVOLUTE, FIXED_TRANSLATION, FIXED_ROTATION]:
             raise ValueError(f'Joint type {joint_type} is not supported.')
         
         self.joint_type = joint_type
@@ -49,7 +49,7 @@ class Frame:
             elif self.a == 0:
                 self.d = self.d + joint_value
         else:
-            if self.joint_type not in [FIXED_PRISMATIC, FIXED_REVOLUTE]:
+            if self.joint_type not in [FIXED_TRANSLATION, FIXED_ROTATION]:
                 print(f"Invalid joint type")
             return None
         
