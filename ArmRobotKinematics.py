@@ -1,7 +1,7 @@
 """
 File: ArmRobotKinematics.py
 
-This module defines the ArmRobotKinematics class, which performs forward and inverse kinematic
+Description: This module defines the ArmRobotKinematics class, which performs forward and inverse kinematic
 calculations of a robot based on its geometry defined in ArmRobot.py. It uses a Jacobian pseudoinverse
 method to perform inverse kinematics iteratively, and contains an empty class to implement an algebraic
 solution specific to a robot's geometry.
@@ -17,9 +17,10 @@ from math import atan2, sqrt, pi
 class ArmRobotKinematics:
     def __init__(self):
         """
-        This module defines the ArmRobot class, which represents an arm robot with multiple joints.
-        It provides functionality to add frames to the arm, move individual joints, and perform 
-        forward kinematics to compute the end-effector position and orientation.
+        This module defines the ArmRobotKinematics class, which performs forward and inverse kinematic
+        calculations of a robot based on its geometry defined in ArmRobot.py. It uses a Jacobian pseudoinverse
+        method to perform inverse kinematics iteratively, and contains an empty class to implement an algebraic
+        solution specific to a robot's geometry.
         """
         self._frames = []
         

@@ -1,7 +1,7 @@
 """
 File: ArmRobot.py
 
-Description:This module defines the ArmRobot class, which represents an arm robot with multiple joints. 
+Description: This module defines the ArmRobot class, which represents an arm robot with multiple joints. 
 It provides functionality to add frames to the arm, move individual joints, update the Denavit-Hartenberg 
 (DH) table, and perform forward and inverse kinematics calculations.
 
