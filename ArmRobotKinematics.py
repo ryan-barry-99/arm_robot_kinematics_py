@@ -143,6 +143,9 @@ class ArmRobotKinematics:
         
 
     def jacobian(self):
+        """
+        Computes the robot's Jacobian matrix.
+        """
         J = np.zeros((6, len(self._frames)))
 
         On = self.forward_kinematics()[:3]  # End-effector position
