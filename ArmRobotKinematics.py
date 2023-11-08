@@ -114,8 +114,8 @@ class ArmRobotKinematics:
             prev_dq = dq
 
             # Update joint angles
-            for i in range(len(self._frames)):
-                self._frames[i].moveJoint(self._frames[i].theta + dq[i])
+            for i, frame in enumerate(self._frames):
+                frame.moveJoint(frame.theta + dq[i])
 
             # Recalculate current end-effector position and orientation
             x, y, z, roll, pitch, yaw = self.forward_kinematics()
