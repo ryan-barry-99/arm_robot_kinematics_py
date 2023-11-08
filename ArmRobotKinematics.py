@@ -77,7 +77,7 @@ class ArmRobotKinematics:
         pass
         
 
-    def iterative_inverse_kinematics(self, target_position, target_orientation, tolerance=0.005, max_iterations=100000, momentum=0.1):
+    def iterative_inverse_kinematics(self, target_position, target_orientation, tolerance=0.01, max_iterations=100000, momentum=0.1):
         """
         Computes the inverse kinematics using an iterative method.
         target_position: The desired end-effector position [x, y, z]
