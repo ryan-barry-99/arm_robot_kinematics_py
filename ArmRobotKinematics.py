@@ -12,7 +12,7 @@ Date created: June, 26 2023
 
 import numpy as np  # Importing the NumPy library for mathematical operations
 from Frame import PRISMATIC, REVOLUTE, FIXED_ROTATION, FIXED_TRANSLATION, Frame
-from math import atan2, sqrt, pi
+from numpy import atan2, sqrt, pi
 
 class ArmRobotKinematics:
     def __init__(self):
