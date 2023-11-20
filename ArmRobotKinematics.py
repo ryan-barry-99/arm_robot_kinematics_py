@@ -77,7 +77,7 @@ class ArmRobotKinematics:
         pass
         
 
-    def iterative_inverse_kinematics(self, target_position, target_orientation, tolerance=0.005, max_iterations=100000, momentum=0.1):
+    def iterative_inverse_kinematics(self, target_position, target_orientation, tolerance=0.01, max_iterations=100000, momentum=0.1):
         """
         Computes the inverse kinematics using an iterative method.
         target_position: The desired end-effector position [x, y, z]
@@ -114,8 +114,8 @@ class ArmRobotKinematics:
             prev_dq = dq
 
             # Update joint angles
-            for i in range(len(self._frames)):
-                self._frames[i].moveJoint(self._frames[i].theta + dq[i])
+            for i, frame in enumerate(self._frames):
+                frame.moveJoint(frame.theta + dq[i])
 
             # Recalculate current end-effector position and orientation
             x, y, z, roll, pitch, yaw = self.forward_kinematics()
