@@ -64,12 +64,13 @@ class Frame:
         sa = np.sin(self.alpha)  # Compute the sine of alpha
         a = self.a
         d = self.d
-        
-        return np.array(
-                            [
-                                [ct, -st * ca, st * sa, a * ct],  # Create the transformation matrix A
-                                [st, ct * ca, -ct * sa, a * st],
-                                [0, sa, ca, d],
-                                [0, 0, 0, 1]
-                            ]
-                        )
+
+        self.tf_mat = np.array(
+                                [
+                                    [ct, -st * ca, st * sa, a * ct],  # Create the transformation matrix A
+                                    [st, ct * ca, -ct * sa, a * st],
+                                    [0, sa, ca, d],
+                                    [0, 0, 0, 1]
+                                ]
+                            )
+        return self.tf_mat
