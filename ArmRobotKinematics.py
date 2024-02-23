@@ -77,7 +77,7 @@ class ArmRobotKinematics:
         pass
         
 
-    def iterative_inverse_kinematics(self, target_position, target_orientation, tolerance=0.01, max_iterations=100000, momentum=0.1):
+    def iterative_inverse_kinematics(self, target_position, target_orientation, pos_tolerance=0.002, or_tolerance=2*pi/180, max_iterations=10000, dx=0.0001, momentum=0.1):
         """
         Computes the inverse kinematics using an iterative method.
         target_position: The desired end-effector position [x, y, z]
@@ -90,12 +90,12 @@ class ArmRobotKinematics:
         target_orientation = np.array(target_orientation)
 
         # Initialize variables
-        position_error = np.inf
-        orientation_error = np.inf
+        position_error = np.array([np.inf, np.inf, np.inf])
+        orientation_error = np.array([np.inf, np.inf, np.inf])
         iterations=0
         # While error is greater than tolerance, iterate
         prev_dq = np.zeros(len(self._frames))
-        while np.linalg.norm(position_error) > tolerance or np.linalg.norm(orientation_error) > tolerance:
+        while np.linalg.norm(position_error) > pos_tolerance or np.linalg.norm(orientation_error) > or_tolerance:
             # Calculate current end-effector position and orientation
             x, y, z, roll, pitch, yaw= self.forward_kinematics()
             current_position = [x, y, z]
@@ -109,8 +109,14 @@ class ArmRobotKinematics:
             # Calculate Jacobian matrix
             J = self.jacobian()
 
+            # Calculate condition number of the Jacobian matrix
+            condition_number = np.linalg.cond(J)
+
+            # Scale dx based on the condition number
+            scaled_dx = dx / condition_number
+
             # Solve for joint increments
-            dq = np.linalg.pinv(J) @ np.concatenate((position_error, orientation_error)) + momentum * prev_dq
+            dq = np.linalg.pinv(J) @ (np.concatenate((position_error, orientation_error))*scaled_dx) + momentum*prev_dq
             prev_dq = dq
 
             # Update joint angles
